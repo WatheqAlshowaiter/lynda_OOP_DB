@@ -1,0 +1,127 @@
+@font-face {
+    font-family: 'DubaiW23-Regular';
+    src: url('lib/webfonts/DubaiW23-Regular.eot');
+    /* IE9 Compat Modes */
+    src: url('lib/webfonts/DubaiW23-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('lib/webfonts/DubaiW23-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('lib/webfonts/DubaiW23-Regular.woff') format('woff'), /* Pretty Modern Browsers */
+    url('lib/webfonts/DubaiW23-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('lib/webfonts/DubaiW23-Regular.svg#svgFontName') format('svg');
+    /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'DubaiW23-Medium';
+    src: url('lib/webfonts/DubaiW23-Medium.eot');
+    /* IE9 Compat Modes */
+    src: url('lib/webfonts/DubaiW23-Medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('lib/webfonts/DubaiW23-Medium.woff2') format('woff2'), /* Super Modern Browsers */
+    url('lib/webfonts/DubaiW23-Medium.woff') format('woff'), /* Pretty Modern Browsers */
+    url('lib/webfonts/DubaiW23-Medium.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('lib/webfonts/DubaiW23-Medium.svg#svgFontName') format('svg');
+    /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'DubaiW23-Bold';
+    src: url('lib/webfonts/DubaiW23-Bold.eot');
+    /* IE9 Compat Modes */
+    src: url('lib/webfonts/DubaiW23-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('lib/webfonts/DubaiW23-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+    url('lib/webfonts/DubaiW23-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+    url('lib/webfonts/DubaiW23-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('lib/webfonts/DubaiW23-Bold.svg#svgFontName') format('svg');
+    /* Legacy iOS */
+}
+
+/* start Genral propertires */
+
+body {
+    text-align: right;
+    font-family: "DubaiW23-Regular", "Tahoma", sans-serif;
+}
+
+h1 {
+    font-family: 'DubaiW23-Bold';
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: 'DubaiW23-Bold';
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+strong, dt {
+    font-family: 'DubaiW23-Bold';
+}
+
+a {
+    text-decoration: none;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+/* End Genral propertires */
+
+/* start container */
+
+.container header {
+    text-align: center;
+    margin-top: 4%;
+}
+
+header .main-logo {
+    width: 100px;
+}
+
+/* end container */
+
+/* start main */
+
+.main {
+    margin-bottom: 20px;
+}
+
+.main .menu {
+    list-style: none;
+}
+
+.main .menu .item {
+    text-align: center;
+}
+
+.main .menu .item a {
+    font-size: large;
+}
+
+/* end main */
+
+.expanding-wrapper img {
+    width: 100%;
+    height: 400px;
+    border: 2px solid black;
+}
+
+/* Start Courses Page */
+
+.courses .row {
+    margin: 30px 5px;
+}
+
+.main .item-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.courses-table tr, th, td {
+    border: solid 1px black;
+}
+.courses-table :nth-child(1){
+    padding: 12px 15px;
+}
+
+/*  End courses page  */
