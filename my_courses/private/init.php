@@ -23,6 +23,7 @@ $doc_root = substr($_SERVER['SCRIPT_NAME'], 0, $public_end);
 define("WWW_ROOT", $doc_root);
 
 require_once('functions.php');
+require_once('status_functions.php');
 require_once('db_credits.php');
 require_once('db_functions.php');
 

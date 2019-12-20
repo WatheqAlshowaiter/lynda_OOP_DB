@@ -1,25 +1,34 @@
 <?php
-  if(!isset($page_title)) { $page_title = 'Staff Area'; }
+  if(!isset($page_title)) { $page_title = 'منطقة الموظفين'; }
 ?>
+<!DOCTYPE html>
+<html lang="utf-8">
 
-<!doctype html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>كورساتي <?php echo isset($page_title) ? "- " . h($page_title) : ""; ?></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" media="all" href="<?= url_for('/css/lib/normalize.css?v=01') ?>">
+  <link rel="stylesheet" media="all" href="<?= url_for('/css/lib/skeleton.css?v=01') ?>">
+  <link rel="stylesheet" media="all" href="<?= url_for('/css/public.css?v=01') ?>">
+  <link rel="icon" type="image/png" href="<?= url_for('/images/logo.png') ?>">
+</head>
 
-<html lang="en">
-  <head>
-    <title>Chain Gang - <?php echo h($page_title); ?></title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheets/staff.css'); ?>" />
-  </head>
+<body>
 
-  <body>
-    <header>
-      <h1>Chain Gang Staff Area</h1>
-    </header>
-
-    <navigation>
-      <ul>
-        <li><a href="<?php echo url_for('/staff/index.php'); ?>">Menu</a></li>
-      </ul>
-    </navigation>
+  <div class="container">
+    <div class="row">
+      <header class=column">
+        <img class="main-logo" src="<?php echo url_for('/images/Watheq_logo.svg') ?>" height= /><br />
+        <h1>
+          <a href="<?php echo url_for('/staff/index.php'); ?>">
+          كورساتي /   خاص بالموظفين
+          </a>
+        </h1>
+      </header>
+    </div>
 
     <?php echo display_session_message(); ?>

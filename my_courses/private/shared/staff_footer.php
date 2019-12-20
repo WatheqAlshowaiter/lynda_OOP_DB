@@ -1,8 +1,10 @@
 <footer>
-  &copy; <?php echo date('Y'); ?> Chain Gang
+<hr>
+  <?php include(SHARED_PATH . '/public_copy_right.php'); ?>
 </footer>
 
 </body>
+
 </html>
 
 <?php

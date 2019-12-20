@@ -106,4 +106,10 @@ class Course
             return "لا";
         }
     }
+
+    public function name()
+    {
+        return "{$this->course_name} | {$this->organization} | {$this->teacher}";
+    }
+
 }
