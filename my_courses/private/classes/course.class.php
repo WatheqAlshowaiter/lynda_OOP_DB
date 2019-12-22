@@ -68,7 +68,7 @@ class Course
 
     public function create()
     {
-        $attributes = $this->attributes();
+        $attributes = $this->sanitized_attributes();
         $sql = "INSERT INTO chain_gangAr.courses(";
         $sql .= join(", ", array_keys($attributes));
         $sql .= ") VALUES ('";
@@ -96,6 +96,14 @@ class Course
         }
         array_shift($attributes); // delete the first item (ID)
         return $attributes;
+    }
+
+    protected function sanitized_attributes(){
+        $sanitized = []; 
+        foreach($this->attributes() as $key => $value){
+            $sanitized[$key] = self::$database->quote($value); 
+        }
+        return $sanitized;
     }
     
     // --- End Active Record --- 

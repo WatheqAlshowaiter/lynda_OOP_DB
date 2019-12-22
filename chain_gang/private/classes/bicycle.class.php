@@ -63,7 +63,7 @@ class Bicycle
 
     public function create()
     {
-        $attributes = $this->attributes(); 
+        $attributes = $this->sanitize_attributes(); 
         $sql = "INSERT INTO bicycles (";
         $sql .= join(",", array_keys($attributes));
         $sql .= ") VALUES ('";
@@ -92,6 +92,14 @@ class Bicycle
             $attributes[$column] = $this->$column;
         }
         return $attributes; 
+    }
+
+    protected function sanitize_attributes(){
+        $sanitize =[]; 
+        foreach($this->attributes() as $key => $value){
+            $sanitize[$key] = self::$database->escape_string($value); 
+        }
+        return $sanitize; 
     }
 
     // --- END OF ACTVICE RECORD ----
