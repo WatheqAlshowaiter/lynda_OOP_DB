@@ -2,7 +2,7 @@
 
 require_once('../../../private/init.php');
 
-if(is_post_request()) {
+if (is_post_request()) {
 
   // Create record using post parameters
   $args = [];
@@ -17,18 +17,20 @@ if(is_post_request()) {
   $args['my_rate'] = $_POST['my_rate'] ?? NULL;
   $args['date_of_completion'] = $_POST['date_of_completion'] ?? NULL;
   $args['link'] = $_POST['link'] ?? NULL;
+  $args['notes'] = $_POST['notes'] ?? NULL;
 
-  $course = [];
-  
-  $result = false;
-  if($result === true) {
-    $new_id = 0;
+  $course = new Course($args);
+  $result = $course->create(); 
+
+
+  if ($result == true) {
+    $new_id = $course->id;
     $_SESSION['message'] = 'أضيف الكورس بنجاح!.';
     redirect_to(url_for('/staff/courses/show.php?id=' . $new_id));
   } else {
     // show errors
+   
   }
-
 } else {
   // display the form
   $course = [];
@@ -46,12 +48,13 @@ if(is_post_request()) {
   <div class="course new">
     <h1>أضف كورسًا</h1>
 
-    <?php // echo display_errors($errors); ?>
+    <?php // echo display_errors($errors); 
+    ?>
 
     <form action="<?php echo url_for('/staff/courses/new.php'); ?>" method="post">
 
       <?php include('form_fields.php'); ?>
-      
+
       <div id="operations">
         <input class="button button-primary" type="submit" value="أضف الكورس" />
       </div>

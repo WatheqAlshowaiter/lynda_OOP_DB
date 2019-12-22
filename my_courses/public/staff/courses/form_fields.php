@@ -1,8 +1,8 @@
 <?php
 // prevents this code from being loaded directly in the browser
 // or without first setting the necessary object
-if(!isset($courses)) {
-  // redirect_to(url_for('/staff/courses/index.php'));
+if(!isset($course)) {
+   redirect_to(url_for('/staff/courses/index.php'));
 }
 ?>
 
@@ -38,12 +38,12 @@ if(!isset($courses)) {
 
 <dl>
   <dt>الطول بالساعات</dt>
-  <dd><input type="text" name="is_course_complete" value="" /></dd>
+  <dd><input type="text" name="length_in_hours" value="" /></dd>
 </dl>
 
 <dl>
   <dt>مكتملة؟</dt>
-  <dd><input type="text" name="weight_kg" value="" /></dd>
+  <dd><input type="text" name="is_course_complete" value="" /></dd>
 </dl>
 
 <dl>

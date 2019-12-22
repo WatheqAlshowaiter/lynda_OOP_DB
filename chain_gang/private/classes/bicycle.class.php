@@ -4,6 +4,7 @@ class Bicycle
 {
     // --- START OF ACTVICE RECORD ----
     static protected $database;
+    static protected $db_comlumns = ["id", 'brand', 'model', 'year', 'category', 'color', 'description', 'gender', 'price', 'weight_kg', 'condition_id'];
 
     static public function set_database($database)
     {
@@ -58,6 +59,39 @@ class Bicycle
         } else {
             return false;
         }
+    }
+
+    public function create()
+    {
+        $attributes = $this->attributes(); 
+        $sql = "INSERT INTO bicycles (";
+        $sql .= join(",", array_keys($attributes));
+        $sql .= ") VALUES ('";
+        $sql .= join("', '", array_values($attributes));
+        $sql .= "')";
+
+        $result = self::$database->query($sql);
+        if ($result) {
+            $this->id = self::$database->insert_id;
+        }
+        return $result;
+    }
+
+    /**
+     * properties which have database columns excluding ID
+     *
+     * @return array attributes
+     */
+    public function attributes()
+    {
+        $attributes = [];
+        foreach (self::$db_comlumns as $column) {
+            if ($column == "id") {
+                continue;
+            }
+            $attributes[$column] = $this->$column;
+        }
+        return $attributes; 
     }
 
     // --- END OF ACTVICE RECORD ----

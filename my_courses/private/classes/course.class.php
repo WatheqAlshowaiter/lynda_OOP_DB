@@ -5,6 +5,10 @@ class Course
 
     // --- Start Active Record --- 
     protected static $database;
+    protected static $db_columns = [
+        'id', 'course_name', 'organization', 'subject', 'teacher', 'level', 'length_in_hours',
+        'language', 'my_rate', 'is_course_complete', 'date_of_completion', 'link', 'notes'
+    ];
 
     public static function set_database($database)
     {
@@ -51,7 +55,7 @@ class Course
     public static function find_by_id($id)
     {
         $sql = "SELECT * FROM chain_gangAr.courses ";
-        $sql .= "WHERE id = " . self::$database->quote($id) . " "; 
+        $sql .= "WHERE id = " . self::$database->quote($id) . " ";
 
         $obj_arr = self::find_by_sql($sql);
 
@@ -61,35 +65,67 @@ class Course
             return false;
         }
     }
+
+    public function create()
+    {
+        $attributes = $this->attributes();
+        $sql = "INSERT INTO chain_gangAr.courses(";
+        $sql .= join(", ", array_keys($attributes));
+        $sql .= ") VALUES ('";
+        $sql .= join("','", array_values($attributes));
+        $sql .= "')";
+
+        $result = self::$database->query($sql);
+        if ($result) {
+            $this->id = self::$database->lastInsertId(); // not like mysqli way
+        }
+        return $result;
+    }
+
+    /**
+     * return properties of the class without ID 
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        $attributes = [];
+        foreach (self::$db_columns as $column) {
+            $attributes[$column] = $this->$column;
+
+        }
+        array_shift($attributes); // delete the first item (ID)
+        return $attributes;
+    }
+    
     // --- End Active Record --- 
     public $id;
     public $course_name;
     public $organization;
     public $subject;
     public $teacher;
-    public $level;
-    public $length_in_hours;
-    public $language;
-    public $my_rate;
-    public $is_course_complete;
-    public $date_of_completion;
+    public $level; // should be list to choose from
+    public $length_in_hours; // shoould be range from 0-999 hrs 
+    public $language; // should be list countains only (Engllish or Arabic)
+    public $my_rate; // should br ranged from 0-10
+    public $is_course_complete; // yes or no 
+    public $date_of_completion; // date picker 
     public $link;
     public $notes;
 
 
     public function __construct($args = [])
     {
-        // maybe we will delete $args[]
-        $this->course_name = $args['name'] ?? '';
+        $this->course_name = $args['course_name'] ?? '';
         $this->organization = $args['organization'] ?? '';
         $this->subject = $args['subject'] ?? '';
         $this->teacher = $args['teacher'] ?? '';
         $this->level = $args['level'] ?? '';
         $this->language = $args['language'] ?? '';
-        $this->is_course_complete = $args['is_complete'] ?? 0;
-        $this->length_in_hours = $args['long_in_hours'] ?? '';
-        $this->rating = $args['rating'] ?? 5;
-        $this->date_of_completion = $args['date_complete'] ?? '';
+        $this->is_course_complete = $args['is_course_complete'] ?? 0;
+        $this->length_in_hours = $args['length_in_hours'] ?? '';
+        $this->my_rate = $args['my_rate'] ?? 5;
+        $this->date_of_completion = $args['date_of_completion'] ?? '';
         $this->link = $args['link'] ?? '';
         $this->notes = $args['notes'] ?? '';
     }
@@ -109,7 +145,8 @@ class Course
 
     public function name()
     {
-        return "{$this->course_name} | {$this->organization} | {$this->teacher}";
+        if ($this->course_name && $this->organization && $this->teacher) {
+            return "{$this->course_name} | {$this->organization} | {$this->teacher}";
+        }
     }
-
 }
