@@ -71,10 +71,10 @@ class Course
         $attributes = $this->sanitized_attributes();
         $sql = "INSERT INTO chain_gangAr.courses(";
         $sql .= join(", ", array_keys($attributes));
-        $sql .= ") VALUES ('";
-        $sql .= join("','", array_values($attributes));
-        $sql .= "')";
-
+        $sql .= ") VALUES (";
+        $sql .= join(",", array_values($attributes));
+        $sql .= ")";
+        // die($sql); // for dubugging purposes 
         $result = self::$database->query($sql);
         if ($result) {
             $this->id = self::$database->lastInsertId(); // not like mysqli way
@@ -92,27 +92,27 @@ class Course
         $attributes = [];
         foreach (self::$db_columns as $column) {
             $attributes[$column] = $this->$column;
-
         }
         array_shift($attributes); // delete the first item (ID)
         return $attributes;
     }
 
-    protected function sanitized_attributes(){
-        $sanitized = []; 
-        foreach($this->attributes() as $key => $value){
-            $sanitized[$key] = self::$database->quote($value); 
+    protected function sanitized_attributes()
+    {
+        $sanitized = [];
+        foreach ($this->attributes() as $key => $value) {
+            $sanitized[$key] = self::$database->quote($value);
         }
         return $sanitized;
     }
-    
+
     // --- End Active Record --- 
     public $id;
     public $course_name;
     public $organization;
     public $subject;
     public $teacher;
-    public $level; // should be list to choose from
+    public $level; // should be list to choose from (1-5)
     public $length_in_hours; // shoould be range from 0-999 hrs 
     public $language; // should be list countains only (Engllish or Arabic)
     public $my_rate; // should br ranged from 0-10
@@ -120,6 +120,15 @@ class Course
     public $date_of_completion; // date picker 
     public $link;
     public $notes;
+
+    public const LEVELS_OPTIONS = [
+        1 => 'مبتدئ',
+        2 => 'مبتدئ-متوسط',
+        3 => 'متوسط',
+        4 => 'متوسط-متقدم',
+        5 => 'متقدم'
+    ];
+    public const LANGUAGES = ['عربي', 'English'];
 
 
     public function __construct($args = [])
@@ -156,5 +165,15 @@ class Course
         if ($this->course_name && $this->organization && $this->teacher) {
             return "{$this->course_name} | {$this->organization} | {$this->teacher}";
         }
+    }
+
+    public function level()
+    {
+        foreach (Course::LEVELS_OPTIONS as $lvl_id => $lvl_name) {
+            if ($this->level == $lvl_id) {
+                return $lvl_name;
+            }
+        }
+        return "غير محدد";
     }
 }

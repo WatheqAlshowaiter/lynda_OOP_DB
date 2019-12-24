@@ -128,3 +128,15 @@ header .main-logo {
 
 
 /* Staff Pages */
+
+
+/* start form fields */
+
+.lngth-hrs{
+    width: 10%;
+}
+
+.notes{
+    min-height: 150px;
+}
+/* end form fields */

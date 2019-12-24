@@ -26,14 +26,12 @@
                             <th>مقدم المحتوى</th>
                             <th>المستوى</th>
                             <th>المادة</th>
-                            <th>اللغة</th>
                             <th>الطول بالساعات</th>
-                            <th>مكتملة؟</th>
-                            <th>التقييم الشخصي</th>
+                            <th>مكتمل؟</th>
+                            <th>تقييمي</th>
                             <th>تاريخ الإكمال</th>
                             <th>الرابط</th>
-                            <th>ملاحظات</th>
-                            <th>&nbsp;</th>
+                            <th>عرض جميع المعلومات للكورس</th>
                         </tr>
                     </thead>
 
@@ -50,13 +48,11 @@
                                 <td><?= h($course->teacher); ?> </td>
                                 <td><?= h($course->level); ?> </td>
                                 <td><?= h($course->subject); ?> </td>
-                                <td><?= h($course->language); ?> </td>
                                 <td><?= h($course->length_in_hours); ?> </td>
                                 <td><?= h($course->is_course_complete()); ?> </td>
                                 <td><?= h($course->my_rate); ?> </td>
                                 <td><?= h($course->date_of_completion); ?> </td>
                                 <td> <a target="_blank" href=" <?= h($course->link); ?>">الرابط</a> </td>
-                                <td><?= h($course->notes); ?> </td>
                                 <td><a href="detail.php?id=<?= $course->id?>">عرض</a></td>
                             </tr>
                         </tbody>

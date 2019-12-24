@@ -39,7 +39,12 @@ $course = Course::find_by_id($id);
       </dl>
       <dl>
         <dt>المستوى</dt>
-        <dd><?php echo h($course->level); ?></dd>
+        <?php
+        foreach (Course::LEVELS_OPTIONS as $level_id => $levels) :
+          if ($course->level == $level_id) : ?>
+            <dd><?php echo h($levels); ?></dd>
+          <?php endif; ?>
+        <?php endforeach; ?>
       </dl>
       <dl>
         <dt>المادة</dt>
@@ -49,9 +54,9 @@ $course = Course::find_by_id($id);
         <dt>اللغة</dt>
         <dd><?php echo h($course->language); ?></dd>
       </dl>
-      <dl>
+      <dl class="rtl">
         <dt>الطول بالساعات</dt>
-        <dd><?php echo h($course->length_in_hours) ?></dd>
+        <dd><?php echo h($course->length_in_hours)  . " ساعة تقريبًا";  ?></dd>
       </dl>
       <dl>
         <dt>مكتملة؟</dt>
@@ -59,7 +64,7 @@ $course = Course::find_by_id($id);
       </dl>
       <dl>
         <dt>التقييم الشخصي</dt>
-        <dd><?php echo h($course->my_rate); ?></dd>
+        <dd><?php echo  "10 / " . h($course->my_rate)  ?></dd>
       </dl>
       <dl>
         <dt>تاريخ الإكمال</dt>
@@ -67,7 +72,14 @@ $course = Course::find_by_id($id);
       </dl>
       <dl>
         <dt>الرابط</dt>
-        <dd><a target="_blank" href="<?= h($course->link); ?>">رابط الكورس على الويب</a> </dd>
+
+        <?php
+        if ($course->link) : ?>
+          <dd><a target="_blank" href="<?= h($course->link); ?>">رابط الكورس على الويب</a> </dd>
+        <?php else : ?>
+          <dd> لا يوجد رابط </dd>
+        <?php endif; ?>
+
       </dl>
       <dl>
         <dt>ملاحظات</dt>
