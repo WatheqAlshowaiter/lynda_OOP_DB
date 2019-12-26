@@ -5,19 +5,7 @@ require_once('../../../private/init.php');
 if (is_post_request()) {
 
   // Create record using post parameters
-  $args = [];
-  $args['course_name'] = $_POST['course_name'] ?? NULL;
-  $args['organization'] = $_POST['organization'] ?? NULL;
-  $args['teacher'] = $_POST['teacher'] ?? NULL;
-  $args['level'] = $_POST['level'] ?? NULL;
-  $args['subject'] = $_POST['subject'] ?? NULL;
-  $args['language'] = $_POST['language'] ?? NULL;
-  $args['length_in_hours'] = $_POST['length_in_hours'] ?? NULL;
-  $args['is_course_complete'] = $_POST['is_course_complete'] ?? NULL;
-  $args['my_rate'] = $_POST['my_rate'] ?? NULL;
-  $args['date_of_completion'] = $_POST['date_of_completion'] ?? NULL;
-  $args['link'] = $_POST['link'] ?? NULL;
-  $args['notes'] = $_POST['notes'] ?? NULL;
+  $args = $_POST['course'];
 
   $course = new Course($args);
   $result = $course->create(); 
