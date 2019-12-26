@@ -1,7 +1,6 @@
 <?php
 
 require_once('../../../private/init.php');
-
 if (is_post_request()) {
 
   // Create record using post parameters
