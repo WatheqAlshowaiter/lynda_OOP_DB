@@ -82,6 +82,24 @@ class Course
         return $result;
     }
 
+    public function update()
+    {
+        $attributes = $this->sanitized_attributes();
+        $attributes_pairs = [];
+
+        foreach ($attributes as $key => $value) {
+            $attributes_pairs[] = "{$key}={$value}";
+        }
+        $sql  = "UPDATE chain_gangAr.courses SET ";
+        $sql .= join(", ", $attributes_pairs);
+        $sql .= "WHERE id = " . self::$database->quote($this->id) . "";
+        $sql .= "LIMIT 1";
+
+        // die($sql); // for debugging purposes
+        $result = self::$database->query($sql);
+        return $result;
+    }
+
     /**
      * return properties of the class without ID 
      *
@@ -104,6 +122,25 @@ class Course
             $sanitized[$key] = self::$database->quote($value);
         }
         return $sanitized;
+    }
+
+    public function merge_attributes($args)
+    {
+        foreach ($args as $key => $value) {
+            if (property_exists($this, $key) && !is_null($value)) {
+                $this->$key = $value;
+            }
+        }
+    }
+
+    public function save()
+    {
+        // new record will not have ID yet
+        if (isset($this->id)) {
+            return $this->update();
+        } else {
+            return $this->create();
+        }
     }
 
     // --- End Active Record --- 

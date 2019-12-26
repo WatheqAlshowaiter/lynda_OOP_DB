@@ -61,9 +61,9 @@ class Bicycle
         }
     }
 
-    public function create()
+    protected function create()
     {
-        $attributes = $this->sanitize_attributes(); 
+        $attributes = $this->sanitize_attributes();
         $sql = "INSERT INTO bicycles (";
         $sql .= join(",", array_keys($attributes));
         $sql .= ") VALUES ('";
@@ -91,16 +91,50 @@ class Bicycle
             }
             $attributes[$column] = $this->$column;
         }
-        return $attributes; 
+        return $attributes;
     }
 
-    protected function sanitize_attributes(){
-        $sanitize =[]; 
-        foreach($this->attributes() as $key => $value){
-            $sanitize[$key] = self::$database->escape_string($value); 
+    protected function sanitize_attributes()
+    {
+        $sanitize = [];
+        foreach ($this->attributes() as $key => $value) {
+            $sanitize[$key] = self::$database->escape_string($value);
         }
-        return $sanitize; 
+        return $sanitize;
     }
+    protected function update()
+    {
+        $attributes = $this->sanitize_attributes();
+        $attribute_pairs = [];
+        foreach ($attributes as $key => $value) {
+            $attribute_pairs[] = "{$key}='{$value}'";
+        }
+        $sql  = "UPDATE bicycles SET ";
+        $sql .= join(", ", $attribute_pairs);
+        $sql .= " WHERE id ='" . self::$database->escape_string($this->id) . "' ";
+        $sql .= "LIMIT 1";
+        // die($sql); 
+        $result = self::$database->query($sql);
+        return $result;
+    }
+    public function merge_attributes($args)
+    {
+        foreach ($args as $key => $value) {
+            if (property_exists($this, $key) && !is_null($value)) {
+                $this->$key = $value;
+            }
+        }
+    }
+    public function save()
+    {
+        // new record will not have ID yet
+        if (isset($this->id)) {
+            return $this->update();
+        } else {
+            return $this->create();
+        }
+    }
+
 
     // --- END OF ACTVICE RECORD ----
     public $id;

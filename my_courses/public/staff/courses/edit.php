@@ -6,6 +6,10 @@ if(!isset($_GET['id'])) {
   redirect_to(url_for('/staff/courses/index.php'));
 }
 $id = $_GET['id'];
+$course =  Course::find_by_id($id);
+if( $course == false){
+  redirect_to(url_for('/staff/courses/index.php'));
+}
 
 if(is_post_request()) {
 
@@ -22,11 +26,12 @@ if(is_post_request()) {
   $args['my_rate'] = $_POST['my_rate'] ?? NULL;
   $args['date_of_completion'] = $_POST['date_of_completion'] ?? NULL;
   $args['link'] = $_POST['link'] ?? NULL;
+  $args['notes'] = $_POST['notes'] ?? NULL;
 
-  $course = [];
+  $course->merge_attributes($args);
+  $result = $course->save(); 
 
-  $result = false;
-  if($result === true) {
+  if($result == true) { // not === true 
     $_SESSION['message'] = 'The course was updated successfully.';
     redirect_to(url_for('/staff/courses/show.php?id=' . $id));
   } else {
@@ -36,7 +41,7 @@ if(is_post_request()) {
 } else {  // is get request
 
   // display the form
-  $course =  Course::find_by_id($id);
+  
 }
 
 ?>
