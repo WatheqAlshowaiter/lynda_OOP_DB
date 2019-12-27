@@ -133,8 +133,10 @@ table#inventory tr td, table#inventory tr th {
 }
 
 /* Start detail.php */
-dt{
+
+dt {
   font-weight: bold;
 }
 
 /* End detail.php */
+

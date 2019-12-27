@@ -7,7 +7,7 @@ if (is_post_request()) {
   $args = $_POST['course'];
 
   $course = new Course($args);
-  $result = $course->create(); 
+  $result = $course->save(); 
 
 
   if ($result == true) {
@@ -35,8 +35,7 @@ if (is_post_request()) {
   <div class="course new">
     <h1>أضف كورسًا</h1>
 
-    <?php // echo display_errors($errors); 
-    ?>
+    <?php  echo display_errors($course->errors);  ?>
 
     <form action="<?php echo url_for('/staff/courses/new.php'); ?>" method="post">
 

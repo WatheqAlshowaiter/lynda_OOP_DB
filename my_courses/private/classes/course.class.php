@@ -10,6 +10,8 @@ class Course
         'language', 'my_rate', 'is_course_complete', 'date_of_completion', 'link', 'notes'
     ];
 
+    public $errors = [];
+
     public static function set_database($database)
     {
         self::$database = $database;
@@ -66,8 +68,30 @@ class Course
         }
     }
 
-    public function create()
+    public function validate()
     {
+        $this->errors = [];
+        // validation just a demo 
+        // course name (not blank)
+        if (is_blank($this->course_name)) {
+            $this->errors[] = "لا يمكن أن يكون اسم الكورس فارغًا";
+        }
+        // organization (not blank)
+        if (is_blank($this->organization)) {
+            $this->errors[] = "لا يمكن أن يكون اسم المؤسسة فارغًا";
+        }
+
+        return $this->errors;
+    }
+
+    protected function create()
+    {
+        // validation 
+        $errors =  $this->validate();
+        if (!empty($errors)) {
+            return false;
+        }
+
         $attributes = $this->sanitized_attributes();
         $sql = "INSERT INTO chain_gangAr.courses(";
         $sql .= join(", ", array_keys($attributes));
@@ -82,8 +106,15 @@ class Course
         return $result;
     }
 
-    public function update()
+    protected function update()
     {
+
+        // validation 
+        $errors =  $this->validate();
+        if (!empty($errors)) {
+            return false;
+        }
+
         $attributes = $this->sanitized_attributes();
         $attributes_pairs = [];
 
@@ -98,6 +129,19 @@ class Course
         // die($sql); // for debugging purposes
         $result = self::$database->query($sql);
         return $result;
+    }
+
+    public function delete()
+    {
+        $sql  = "DELETE FROM chain_gangAr.courses ";
+        $sql .= "WHERE id =" . self::$database->quote($this->id) . " ";
+        $sql .= "LIMIT 1 ";
+        $result = self::$database->query($sql);
+        return $result; 
+
+        // you can use some object data even 
+        // it is deleted from DB like 
+        // you delete record number: 5!
     }
 
     /**

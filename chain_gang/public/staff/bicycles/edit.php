@@ -45,7 +45,7 @@ if(is_post_request()) {
   <div class="bicycle edit">
     <h1>Edit Bicycle</h1>
 
-    <?php // echo display_errors($errors); ?>
+    <?php  echo display_errors($bicycle->errors); ?>
 
     <form action="<?php echo url_for('/staff/bicycles/edit.php?id=' . h(u($id))); ?>" method="post">
 

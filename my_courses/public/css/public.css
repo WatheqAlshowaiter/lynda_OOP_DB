@@ -140,3 +140,20 @@ header .main-logo {
     min-height: 150px;
 }
 /* end form fields */
+
+/* Start delet.php */
+
+.delete .btn-del { 
+    color: white;
+    background-color: crimson;
+    font-weight: bold;
+    font-size: large;
+}
+.delete .btn-del:hover{
+    color: white;
+    background-color: #b10e2b;
+    font-weight: bold;
+    font-size: large;
+
+}
+/* End delet.php  */

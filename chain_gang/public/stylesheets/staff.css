@@ -139,3 +139,13 @@ dd {
   margin: 1em 30px;
   width: 890px;
 }
+
+/* Start delete.php  */
+
+.delete .item{
+  font-weight: bold;
+  color: red;
+}
+
+
+/* End Delete.php  */
