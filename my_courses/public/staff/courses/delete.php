@@ -3,7 +3,7 @@
 require_once('../../../private/init.php');
 
 if (!isset($_GET['id'])) {
-  redirect_to(url_for('/staff/courses/index.php'));
+  redirect_to(url_for('/staff/admins/index.php'));
 }
 $id = $_GET['id'];
 $course = Course::find_by_id($id);

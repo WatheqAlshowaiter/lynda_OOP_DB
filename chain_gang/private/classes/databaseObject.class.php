@@ -4,7 +4,7 @@ class DatabaseObject
 {
     // --- START OF ACTVICE RECORD ----
     static protected $database;
-    static protected $tabla_name;
+    static protected $table_name = "";
     static protected $db_comlumns = "";
 
     public $errors = [];
@@ -33,7 +33,7 @@ class DatabaseObject
 
     static public function find_all()
     {
-        $sql = "SELECT * FROM " . static::$tabla_name . " ";
+        $sql = "SELECT * FROM " . static::$table_name . " ";
         return static::find_by_sql($sql);
     }
     static protected function instantiate($record)

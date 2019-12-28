@@ -8,6 +8,7 @@
     <h2>القائمة الرئيسية</h2>
     <ul>
       <li> <a href="<?php echo url_for('/staff/courses/index.php'); ?>">كورساتي</a></li>
+      <li> <a href="<?php echo url_for('/staff/admins/index.php'); ?>">المديرون</a></li>
     </ul>
   </div>
 

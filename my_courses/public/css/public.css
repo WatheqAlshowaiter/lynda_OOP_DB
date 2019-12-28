@@ -157,3 +157,14 @@ header .main-logo {
 
 }
 /* End delet.php  */
+
+/* Start admins */
+.admins-table tr, th, td {
+    border: solid 1px black;
+}
+
+.admins-table :first-child, .admins-table :last-child{
+    padding: 12px 15px;
+}
+
+/* End admins */
