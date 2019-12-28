@@ -49,4 +49,4 @@ function my_autoload($class_name)
 spl_autoload_register('my_autoload');
 
 $db = db_connect(); 
-Course::set_database($db); 
+DbObj::set_database($db); 

@@ -1,193 +1,14 @@
 <?php
 
-class Course
+class Course extends DbObj
 {
 
-    // --- Start Active Record --- 
-    protected static $database;
     protected static $db_columns = [
         'id', 'course_name', 'organization', 'subject', 'teacher', 'level', 'length_in_hours',
         'language', 'my_rate', 'is_course_complete', 'date_of_completion', 'link', 'notes'
     ];
+    protected static $table_name = "chain_gangAr.courses";
 
-    public $errors = [];
-
-    public static function set_database($database)
-    {
-        self::$database = $database;
-    }
-
-    public static function find_by_sql($sql)
-    {
-        $result = self::$database->query($sql);
-        if (!$result) {
-            exit("Database Query Failed!");
-        }
-        $result->execute();
-
-        // array to object 
-        $object_array  = [];
-        while ($record = $result->fetch(PDO::FETCH_ASSOC)) {
-            $object_array[] = self::instantiate($record);
-        }
-        $result->closeCursor();
-
-        return $object_array;
-    }
-
-    public static function find_all()
-    {
-        $sql  = "SELECT * FROM chain_gangAr.courses";
-        return self::find_by_sql($sql);
-    }
-
-    protected  static function instantiate($record)
-    {
-        $object = new self;
-        // we can assign properties manually 
-        // but automatically is better  
-        foreach ($record as $property => $value) {
-            if (property_exists($object, $property)) {
-                $object->$property = $value;
-            }
-        }
-        return $object;
-    }
-
-    public static function find_by_id($id)
-    {
-        $sql = "SELECT * FROM chain_gangAr.courses ";
-        $sql .= "WHERE id = " . self::$database->quote($id) . " ";
-
-        $obj_arr = self::find_by_sql($sql);
-
-        if (!empty($obj_arr)) {
-            return array_shift($obj_arr);
-        } else {
-            return false;
-        }
-    }
-
-    public function validate()
-    {
-        $this->errors = [];
-        // validation just a demo 
-        // course name (not blank)
-        if (is_blank($this->course_name)) {
-            $this->errors[] = "لا يمكن أن يكون اسم الكورس فارغًا";
-        }
-        // organization (not blank)
-        if (is_blank($this->organization)) {
-            $this->errors[] = "لا يمكن أن يكون اسم المؤسسة فارغًا";
-        }
-
-        return $this->errors;
-    }
-
-    protected function create()
-    {
-        // validation 
-        $errors =  $this->validate();
-        if (!empty($errors)) {
-            return false;
-        }
-
-        $attributes = $this->sanitized_attributes();
-        $sql = "INSERT INTO chain_gangAr.courses(";
-        $sql .= join(", ", array_keys($attributes));
-        $sql .= ") VALUES (";
-        $sql .= join(",", array_values($attributes));
-        $sql .= ")";
-        // die($sql); // for dubugging purposes 
-        $result = self::$database->query($sql);
-        if ($result) {
-            $this->id = self::$database->lastInsertId(); // not like mysqli way
-        }
-        return $result;
-    }
-
-    protected function update()
-    {
-
-        // validation 
-        $errors =  $this->validate();
-        if (!empty($errors)) {
-            return false;
-        }
-
-        $attributes = $this->sanitized_attributes();
-        $attributes_pairs = [];
-
-        foreach ($attributes as $key => $value) {
-            $attributes_pairs[] = "{$key}={$value}";
-        }
-        $sql  = "UPDATE chain_gangAr.courses SET ";
-        $sql .= join(", ", $attributes_pairs);
-        $sql .= "WHERE id = " . self::$database->quote($this->id) . "";
-        $sql .= "LIMIT 1";
-
-        // die($sql); // for debugging purposes
-        $result = self::$database->query($sql);
-        return $result;
-    }
-
-    public function delete()
-    {
-        $sql  = "DELETE FROM chain_gangAr.courses ";
-        $sql .= "WHERE id =" . self::$database->quote($this->id) . " ";
-        $sql .= "LIMIT 1 ";
-        $result = self::$database->query($sql);
-        return $result; 
-
-        // you can use some object data even 
-        // it is deleted from DB like 
-        // you delete record number: 5!
-    }
-
-    /**
-     * return properties of the class without ID 
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        $attributes = [];
-        foreach (self::$db_columns as $column) {
-            $attributes[$column] = $this->$column;
-        }
-        array_shift($attributes); // delete the first item (ID)
-        return $attributes;
-    }
-
-    protected function sanitized_attributes()
-    {
-        $sanitized = [];
-        foreach ($this->attributes() as $key => $value) {
-            $sanitized[$key] = self::$database->quote($value);
-        }
-        return $sanitized;
-    }
-
-    public function merge_attributes($args)
-    {
-        foreach ($args as $key => $value) {
-            if (property_exists($this, $key) && !is_null($value)) {
-                $this->$key = $value;
-            }
-        }
-    }
-
-    public function save()
-    {
-        // new record will not have ID yet
-        if (isset($this->id)) {
-            return $this->update();
-        } else {
-            return $this->create();
-        }
-    }
-
-    // --- End Active Record --- 
     public $id;
     public $course_name;
     public $organization;
@@ -256,5 +77,21 @@ class Course
             }
         }
         return "غير محدد";
+    }
+
+    public function validate()
+    {
+        $this->errors = [];
+        // validation just a demo 
+        // course name (not blank)
+        if (is_blank($this->course_name)) {
+            $this->errors[] = "لا يمكن أن يكون اسم الكورس فارغًا";
+        }
+        // organization (not blank)
+        if (is_blank($this->organization)) {
+            $this->errors[] = "لا يمكن أن يكون اسم المؤسسة فارغًا";
+        }
+
+        return $this->errors;
     }
 }
