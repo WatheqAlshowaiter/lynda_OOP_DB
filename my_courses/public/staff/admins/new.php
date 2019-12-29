@@ -7,22 +7,24 @@ if (is_post_request()) {
 
   // Create record using post parameters
   $args = $_POST['admin'];
-
+  // var_dump($args);
   $admin = new Admin($args);
+  // var_dump($admin);
   $result = $admin->save();
+  // var_dump("resut: ", $result);
 
   if ($result == true) {
     $new_id = $admin->id;
+
     $_SESSION['message'] = 'أضيف المدير بنجاح!.';
     redirect_to(url_for('/staff/admins/show.php?id=' . $new_id));
   } else {
     // show errors
-   
+    echo "result is not true";
   }
 } else {
   // display the form
-  $admin = new Admin;
-  
+  $admin = [];
 }
 
 ?>
@@ -37,7 +39,7 @@ if (is_post_request()) {
   <div class="admin new">
     <h1>أضف كورسًا</h1>
 
-    <?php  echo display_errors($admin->errors);  ?>
+    <?php echo display_errors($admin->errors);  ?>
 
     <form action="<?php echo url_for('/staff/admins/new.php'); ?>" method="post">
 

@@ -17,7 +17,6 @@ class Admin extends DbObj
 
     public function __construct($args = [])
     {
-        $this->id = $args['id'] ?? '';
         $this->first_name = $args['first_name'] ?? '';
         $this->last_name = $args['last_name'] ?? '';
         $this->email = $args['email'] ?? '';
@@ -27,6 +26,24 @@ class Admin extends DbObj
     }
     public function full_name()
     {
-        return $this->first_name . " " . $this->last_name;
+      return $this->first_name . " " . $this->last_name;
+    }
+  
+
+    protected  function set_hashed_password()
+    {
+        $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    protected function create()
+    {
+        $this->set_hashed_password();
+        return parent::create();
+    }
+
+    protected function update()
+    {
+        $this->set_hashed_password();
+        return parent::update();
     }
 }

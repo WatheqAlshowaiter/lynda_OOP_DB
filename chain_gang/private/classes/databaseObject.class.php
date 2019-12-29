@@ -5,7 +5,7 @@ class DatabaseObject
     // --- START OF ACTVICE RECORD ----
     static protected $database;
     static protected $table_name = "";
-    static protected $db_comlumns = "";
+    static protected $db_columns = "";
 
     public $errors = [];
 
@@ -52,7 +52,7 @@ class DatabaseObject
 
     static public function find_by_id($id)
     {
-        $sql  = "SELECT * FROM " . static::$tabla_name . " ";
+        $sql  = "SELECT * FROM " . static::$table_name . " ";
         $sql .= "WHERE id = '" . self::$database->escape_string($id) . "' ";
 
         $obj_array = static::find_by_sql($sql);
@@ -82,12 +82,12 @@ class DatabaseObject
             return false;
         }
         $attributes = $this->sanitize_attributes();
-        $sql = "INSERT INTO " . static::$tabla_name . " (";
+        $sql = "INSERT INTO " . static::$table_name . " (";
         $sql .= join(",", array_keys($attributes));
         $sql .= ") VALUES ('";
         $sql .= join("', '", array_values($attributes));
         $sql .= "')";
-
+        
         $result = self::$database->query($sql);
         if ($result) {
             $this->id = self::$database->insert_id;
@@ -106,7 +106,7 @@ class DatabaseObject
         foreach ($attributes as $key => $value) {
             $attribute_pairs[] = "{$key}='{$value}'";
         }
-        $sql  = "UPDATE " . static::$tabla_name . " SET ";
+        $sql  = "UPDATE " . static::$table_name . " SET ";
         $sql .= join(", ", $attribute_pairs);
         $sql .= " WHERE id ='" . self::$database->escape_string($this->id) . "' ";
         $sql .= "LIMIT 1";
@@ -116,7 +116,7 @@ class DatabaseObject
     }
     public function delete()
     {
-        $sql = "DELETE FROM " . static::$tabla_name . "  ";
+        $sql = "DELETE FROM " . static::$table_name . "  ";
         $sql .= "WHERE id='" . self::$database->escape_string($this->id) . "' ";
         $sql .= "LIMIT 1 ";
         $result = self::$database->query($sql);
@@ -138,7 +138,7 @@ class DatabaseObject
     public function attributes()
     {
         $attributes = [];
-        foreach (static::$db_comlumns as $column) {
+        foreach (static::$db_columns as $column) {
             if ($column == "id") {
                 continue;
             }

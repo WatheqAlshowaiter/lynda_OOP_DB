@@ -6,6 +6,7 @@ if(is_post_request()) {
 
   // Create record using post parameters
   $args = $_POST['admin'];
+  // var_dump($args);
   $admin = new Admin($args);
   $result = $admin->save();
 

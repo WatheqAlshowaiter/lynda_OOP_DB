@@ -4,7 +4,7 @@ class DbObj
 {
     // --- Start Active Record --- 
     protected static $database;
-    protected static $table_name = "chain_gangAr.courses";
+    protected static $table_name = "";
     protected static $db_columns = [];
 
     public $errors = [];
@@ -81,7 +81,7 @@ class DbObj
         }
 
         $attributes = $this->sanitized_attributes();
-        $sql = "INSERT INTO ".static::$table_name."( ";
+        $sql = "INSERT INTO " . static::$table_name . "( ";
         $sql .= join(", ", array_keys($attributes));
         $sql .= ") VALUES (";
         $sql .= join(",", array_values($attributes));
@@ -109,7 +109,7 @@ class DbObj
         foreach ($attributes as $key => $value) {
             $attributes_pairs[] = "{$key}={$value}";
         }
-        $sql  = "UPDATE ".static::$table_name." SET ";
+        $sql  = "UPDATE " . static::$table_name . " SET ";
         $sql .= join(", ", $attributes_pairs);
         $sql .= "WHERE id = " . self::$database->quote($this->id) . "";
         $sql .= "LIMIT 1";
@@ -141,9 +141,11 @@ class DbObj
     {
         $attributes = [];
         foreach (static::$db_columns as $column) {
+            if ($column == "id") {
+                continue;
+            }
             $attributes[$column] = $this->$column;
         }
-        array_shift($attributes); // delete the first item (ID)
         return $attributes;
     }
 

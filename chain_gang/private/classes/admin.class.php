@@ -1,6 +1,7 @@
 <?php
 
-class Admin extends DatabaseObject {
+class Admin extends DatabaseObject
+{
 
   static protected $table_name = "admins";
   static protected $db_columns = ['id', 'first_name', 'last_name', 'email', 'username', 'hashed_password'];
@@ -14,7 +15,8 @@ class Admin extends DatabaseObject {
   public $password;
   public $confirm_password;
 
-  public function __construct($args=[]) {
+  public function __construct($args = [])
+  {
     $this->first_name = $args['first_name'] ?? '';
     $this->last_name = $args['last_name'] ?? '';
     $this->email = $args['email'] ?? '';
@@ -23,10 +25,25 @@ class Admin extends DatabaseObject {
     $this->confirm_password = $args['confirm_password'] ?? '';
   }
 
-  public function full_name() {
+  public function full_name()
+  {
     return $this->first_name . " " . $this->last_name;
   }
 
-}
+  protected function set_hashed_password()
+  {
+    $this->hashed_password =  password_hash($this->password, PASSWORD_BCRYPT);
+  }
 
-?>
+  protected function create()
+  {
+    $this->set_hashed_password();
+    return parent::create();
+  }
+
+  protected function update()
+  {
+    $this->set_hashed_password();
+    return parent::update();
+  }
+}
