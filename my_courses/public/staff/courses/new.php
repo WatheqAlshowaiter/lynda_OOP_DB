@@ -1,6 +1,7 @@
 <?php
 
 require_once('../../../private/init.php');
+require_login();
 if (is_post_request()) {
 
   // Create record using post parameters
@@ -12,7 +13,7 @@ if (is_post_request()) {
 
   if ($result == true) {
     $new_id = $course->id;
-    $_SESSION['message'] = 'أضيف الكورس بنجاح!.';
+    $session->message('أضيف الكورس بنجاح');
     redirect_to(url_for('/staff/courses/show.php?id=' . $new_id));
   } else {
     // show errors

@@ -1,6 +1,7 @@
 <?php
 
 require_once('../../../private/init.php');
+require_login();
 
 if (!isset($_GET['id'])) {
   redirect_to(url_for('/staff/admins/index.php'));
@@ -16,7 +17,7 @@ if (is_post_request()) {
   // Delete bicycle
   $result = $course->delete();
 
-  $_SESSION['message'] = 'The Course was deleted successfully.';
+  $session->message('حذف الكورس بنجاح');
   redirect_to(url_for('/staff/courses/index.php'));
 } else {
   // Display form

@@ -21,9 +21,7 @@
       <header class=column">
         <img class="main-logo" src="<?php echo url_for('/images/Watheq_logo.svg') ?>" height= /><br />
         <h1>
-          <a href="<?php echo url_for('/index.php'); ?>">
-            كورساتي
-          </a>
+          <a href="<?php echo url_for('/index.php'); ?>"> كورساتي </a>
         </h1>
       </header>
     </div>

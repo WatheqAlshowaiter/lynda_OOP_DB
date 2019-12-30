@@ -1,6 +1,7 @@
 <?php
 
 require_once('../../../private/init.php');
+require_login();
 
 if (!isset($_GET['id'])) {
   redirect_to(url_for('/staff/admins/index.php'));
@@ -16,7 +17,7 @@ if (is_post_request()) {
   // Delete bicycle
   $result = $admin->delete();
 
-  $_SESSION['message'] = 'The admin was deleted successfully.';
+  $session->message('حذف المدير بنجاح');
   redirect_to(url_for('/staff/admins/index.php'));
 } else {
   // Display form

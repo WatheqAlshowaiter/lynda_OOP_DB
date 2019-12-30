@@ -1,5 +1,7 @@
 <?php
-  if(!isset($page_title)) { $page_title = 'منطقة الموظفين'; }
+if (!isset($page_title)) {
+  $page_title = 'منطقة الموظفين';
+}
 ?>
 <!DOCTYPE html>
 <html lang="utf-8">
@@ -23,11 +25,19 @@
     <div class="row">
       <header class=column">
         <img class="main-logo" src="<?php echo url_for('/images/Watheq_logo.svg') ?>" height= /><br />
-        <h1>
-          <a href="<?php echo url_for('/staff/index.php'); ?>">
-          كورساتي /   خاص بالموظفين
-          </a>
-        </h1>
+        <?php if ($session->is_logged_in()) : ?>
+
+          <h5>
+
+            <a href="<?php echo url_for('/staff/index.php'); ?>">
+              كورساتي / خاص بالموظفين
+            </a>
+
+            <a href="<?php echo url_for('/staff/logout.php'); ?>">| تسجيل الخروج </a>
+          </h5>
+     
+        <h5>{<?php echo $session->username; ?>} :المستخدم</h5>
+        <? endif; ?>
       </header>
     </div>
 

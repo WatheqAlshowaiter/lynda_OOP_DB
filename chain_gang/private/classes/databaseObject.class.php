@@ -5,7 +5,7 @@ class DatabaseObject
     // --- START OF ACTVICE RECORD ----
     static protected $database;
     static protected $table_name = "";
-    static protected $db_columns = "";
+    static protected $db_columns = [];
 
     public $errors = [];
 
@@ -83,11 +83,11 @@ class DatabaseObject
         }
         $attributes = $this->sanitize_attributes();
         $sql = "INSERT INTO " . static::$table_name . " (";
-        $sql .= join(",", array_keys($attributes));
+        $sql .= join(", ", array_keys($attributes));
         $sql .= ") VALUES ('";
         $sql .= join("', '", array_values($attributes));
         $sql .= "')";
-        
+
         $result = self::$database->query($sql);
         if ($result) {
             $this->id = self::$database->insert_id;
@@ -131,19 +131,25 @@ class DatabaseObject
     }
 
     /**
-     * properties which have database columns excluding ID
+     * properties which have database db_columns excluding ID
      *
      * @return array attributes
      */
     public function attributes()
     {
         $attributes = [];
-        foreach (static::$db_columns as $column) {
-            if ($column == "id") {
-                continue;
+
+        // if (is_array(static::$db_columns) || is_object(static::$db_columns)) {
+            foreach (static::$db_columns as $column) {
+                if ($column == "id") {
+                    continue;
+                }
+                $attributes[$column] = $this->$column;
             }
-            $attributes[$column] = $this->$column;
-        }
+        // }else {
+            // var_dump(static::$db_db_columns);die();
+        // }
+
         return $attributes;
     }
 

@@ -2,6 +2,7 @@
 
 
 require_once('../../../private/init.php');
+require_login();
 
 if (is_post_request()) {
 
@@ -15,12 +16,12 @@ if (is_post_request()) {
 
   if ($result == true) {
     $new_id = $admin->id;
-
-    $_SESSION['message'] = 'أضيف المدير بنجاح!.';
+    
+    $session->message('أضيف المدير بنجاح');
     redirect_to(url_for('/staff/admins/show.php?id=' . $new_id));
   } else {
     // show errors
-    echo "result is not true";
+    // echo "result is not true";
   }
 } else {
   // display the form

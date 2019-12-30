@@ -65,7 +65,7 @@ class DbObj
         }
     }
 
-    public function validate()
+    protected function validate()
     {
         // it will be overrated
         $this->errors = [];

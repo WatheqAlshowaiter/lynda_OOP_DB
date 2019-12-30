@@ -1,8 +1,6 @@
 <?php
 ob_start(); // turn on output buffering
 
-// session_start(); // turn on sessions if needed
-
 // Assign file paths to PHP constants
 // __FILE__ returns the current path to this file
 // dirname() returns the path to the parent directory
@@ -50,3 +48,4 @@ spl_autoload_register('my_autoload');
 
 $db = db_connect(); 
 DbObj::set_database($db); 
+$session = new Session; 

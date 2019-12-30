@@ -2,7 +2,7 @@
 
 class Bicycle extends DatabaseObject 
 {
-    static protected $db_comlumns = ["id", 'brand', 'model', 'year', 'category', 'color', 'description', 'gender', 'price', 'weight_kg', 'condition_id'];
+    static protected $db_columns = ["id", 'brand', 'model', 'year', 'category', 'color', 'description', 'gender', 'price', 'weight_kg', 'condition_id'];
     static protected $table_name = "bicycles";
 
     public $id;
