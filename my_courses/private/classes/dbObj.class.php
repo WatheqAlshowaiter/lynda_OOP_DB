@@ -38,6 +38,16 @@ class DbObj
         return self::find_by_sql($sql);
     }
 
+    public static function count_all()
+    {
+        $sql  = "SELECT COUNT(*) FROM " . static::$table_name . " ";
+        $result_set = self::$database->query($sql);
+        $result_set->execute();
+        $row = $result_set->fetch(PDO::FETCH_COLUMN); 
+        return $row;
+    }
+    
+
     protected  static function instantiate($record)
     {
         $object = new static;

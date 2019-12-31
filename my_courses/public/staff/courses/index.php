@@ -1,10 +1,25 @@
 <?php require_once('../../../private/init.php'); ?>
-<?php require_login();?>
+<?php require_login(); ?>
 
 <?php
 
+$current_page = $_GET['page'] ?? 1;
+$per_page = 2;
+$total_count = Course::count_all();
+
+$pagination = new Pagination($current_page, $per_page, $total_count);
+
+$sql = "SELECT * FROM chain_gangAr.courses ";
+$sql .= "LIMIT {$per_page} ";
+$sql .= "OFFSET {$pagination->offset()} ";
+
+// var_dump($sql); // for debugging 
+
+$courses = Course::find_by_sql($sql);
+
 // Find all Courses;
-$courses = Course::find_all();
+// we will do pagination instead 
+// $courses = Course::find_all();
 
 ?>
 <?php $page_title = 'الكورسات'; ?>
@@ -45,7 +60,7 @@ $courses = Course::find_all();
                             <tr>
                                 <td><?= h($course->course_name); ?> </td>
                                 <td><?= h($course->organization); ?> </td>
-                                <td><?= h($course->teacher); ?> </td>                                
+                                <td><?= h($course->teacher); ?> </td>
                                 <td><?= h($course->level()); ?> </td>
                                 <td><?= h($course->subject); ?> </td>
 
@@ -63,11 +78,15 @@ $courses = Course::find_all();
                     <?php endforeach; ?>
                 </table>
 
+
+                <?php
+                $url = url_for('/staff/courses/index.php');
+                echo $pagination->page_links($url);
+                ?>
+
             </div>
 
         </div>
-
     </div>
-</div>
 
-<?php include(SHARED_PATH . '/staff_footer.php'); ?>
+    <?php include(SHARED_PATH . '/staff_footer.php'); ?>
